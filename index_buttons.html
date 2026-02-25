@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Practice</title>
+  <style>
+    :root{
+      --u5:#2563eb;   /* Unit 5: blue */
+      --u6:#ec4899;   /* Unit 6: pink */
+      --u8:#10b981;   /* Unit 8: green */
+      --bg:#f1f5f9;
+      --card:#ffffff;
+      --ink:#1f2937;
+      --muted:#6b7280;
+    }
+    body{
+      margin:0;
+      font-family:"Segoe UI", Arial, sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+      padding:44px 16px;
+      text-align:center;
+    }
+    .wrap{
+      max-width:820px;
+      margin:0 auto;
+      background:var(--card);
+      padding:34px 18px 26px;
+      border-radius:18px;
+      box-shadow:0 18px 38px rgba(0,0,0,.10);
+    }
+    h1{
+      margin:0 0 8px;
+      font-size:32px;
+    }
+    p{
+      margin:0 0 26px;
+      color:var(--muted);
+      font-weight:600;
+    }
+    .section{
+      margin:22px 0 10px;
+      text-align:left;
+    }
+    .section h2{
+      margin:0 0 10px;
+      font-size:16px;
+      letter-spacing:.2px;
+      color:var(--muted);
+      font-weight:800;
+      text-transform:uppercase;
+    }
+    .btn{
+      display:block;
+      width:100%;
+      text-decoration:none;
+      color:white;
+      padding:14px 16px;
+      border-radius:12px;
+      font-weight:800;
+      margin:10px 0;
+      box-shadow:0 10px 18px rgba(0,0,0,.10);
+      transition:transform .15s ease, filter .15s ease;
+    }
+    .btn:hover{ transform: translateY(-2px); filter:brightness(1.03); }
+    .u5{ background:var(--u5); }
+    .u6{ background:var(--u6); }
+    .u8{ background:var(--u8); }
+    .small{
+      display:block;
+      margin-top:6px;
+      font-weight:650;
+      opacity:.92;
+      font-size:13px;
+    }
+    footer{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:650;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>English Practice</h1>
+    <p>Wähle eine Übung (Unit 5 / 6 / 8).</p>
+
+    <div class="section">
+      <h2>Unit 5</h2>
+      <a class="btn u5" href="Englisch_Unit5_Vokabeln_Minitest.html">
+        Vocabulary + Mini-Test
+        <span class="small">words & phrases · Unit 5</span>
+      </a>
+      <a class="btn u5" href="Englisch_Listening_Unit5_Ausfuellbar.html">
+        Listening – Teil 1
+        <span class="small">Unit 5</span>
+      </a>
+      <a class="btn u5" href="Englisch_Listening_Unit5_Ausfuellbar_2.html">
+        Listening – Teil 2
+        <span class="small">Unit 5</span>
+      </a>
+    </div>
+
+    <div class="section">
+      <h2>Unit 6</h2>
+      <a class="btn u6" href="Unit6_Time_for_adventure_Practice.html">
+        Unit 6 – Complete Practice
+        <span class="small">places · picture description · plans · have to / don’t have to</span>
+      </a>
+      <a class="btn u6" href="Youth_Camp_Email_AHS_Isabel.html">
+        Writing – Youth Camp Email
+        <span class="small">Unit 6 writing</span>
+      </a>
+    </div>
+
+    <div class="section">
+      <h2>Unit 8</h2>
+      <a class="btn u8" href="Past_Simple_Intensive_Unit8.html">
+        Past Simple Intensive
+        <span class="small">past simple · time markers</span>
+      </a>
+    </div>
+
+    <footer>
+      Tipp: Wenn du später neue Übungen dazunimmst, einfach hier einen neuen Button ergänzen.
+    </footer>
+  </div>
+</body>
+</html>
