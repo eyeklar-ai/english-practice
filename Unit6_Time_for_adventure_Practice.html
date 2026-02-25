@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit6 Time for adventure Practice</title>
+<style>
+body{font-family:Segoe UI,Arial,sans-serif;background:#f4f6fa;padding:20px;margin:0;}
+.top{display:flex;justify-content:space-between;background:#fff;border-left:8px solid #ec4899;
+padding:10px 15px;border-radius:10px;margin-bottom:15px;}
+.btn{font-weight:700;text-decoration:none;border:1px solid #ddd;padding:6px 10px;
+border-radius:8px;background:#fff;color:#000;}
+.card{background:#fff;padding:20px;border-radius:14px;}
+@media print{.btn{display:none;}}
+</style>
+</head>
+<body>
+<div class="top">
+<button class="btn" onclick="window.print()">🖨️ Als PDF speichern</button>
+<a class="btn" href="index.html">🏠 Back to Home</a>
+</div>
+<div class="card">
+
+  <div class="wrap">
+    <div class="topbar">
+      
+      <div class="badge">🎒 Unit 6 · Time for adventure</div>
+    </div>
+
+    <header class="hero">
+      <div class="hero-top">
+        <div class="title">
+          <div class="unit">UNIT 6</div>
+          <div>
+            <h1>Practice Pack</h1>
+            <div class="subtitle">Places · Describing a picture · Plans · have to / don’t have to · Writing</div>
+          </div>
+        </div>
+        <div class="chips">
+          <div class="chip">Quick feedback</div>
+          <div class="chip">School-test style</div>
+          <div class="chip">Printable</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2 class="section-title"><span class="icon">1</span>Grammar: have to / don’t have to</h2>
+        <p class="hint">Choose the correct option. Then click <b>Check</b>.</p>
+
+        <div id="g1" class="q">
+          <strong>1)</strong> We ______ wear a helmet when we go rock climbing. (It’s necessary.)
+          <div class="options">
+            <label class="opt"><input type="radio" name="g1" value="a"> have to</label>
+            <label class="opt"><input type="radio" name="g1" value="b"> don’t have to</label>
+            <label class="opt"><input type="radio" name="g1" value="c"> mustn’t</label>
+          </div>
+        </div>
+
+        <div id="g2" class="q">
+          <strong>2)</strong> You ______ wash up now. (It’s not necessary.)
+          <div class="options">
+            <label class="opt"><input type="radio" name="g2" value="a"> have to</label>
+            <label class="opt"><input type="radio" name="g2" value="b"> don’t have to</label>
+            <label class="opt"><input type="radio" name="g2" value="c"> has to</label>
+          </div>
+        </div>
+
+        <div id="g3" class="q">
+          <strong>3)</strong> Dana ______ get up early tomorrow. (3rd person singular)
+          <div class="options">
+            <label class="opt"><input type="radio" name="g3" value="a"> have to</label>
+            <label class="opt"><input type="radio" name="g3" value="b"> has to</label>
+            <label class="opt"><input type="radio" name="g3" value="c"> don’t have to</label>
+          </div>
+        </div>
+
+        <div id="g4" class="q">
+          <strong>4)</strong> We ______ go to the lake today. (It’s optional.)
+          <div class="options">
+            <label class="opt"><input type="radio" name="g4" value="a"> have to</label>
+            <label class="opt"><input type="radio" name="g4" value="b"> don’t have to</label>
+            <label class="opt"><input type="radio" name="g4" value="c"> has to</label>
+          </div>
+        </div>
+
+        <div class="btnrow">
+          
+          
+        </div>
+        <div id="grammarResult" class="result"></div>
+
+        <div class="divider"></div>
+
+        <div class="note">
+          Tip: <b>have to</b> = necessary. <b>don’t have to</b> = not necessary. (But it can still be OK to do it.)
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title"><span class="icon">2</span>Vocabulary: places</h2>
+        <p class="hint">Match the words to the definitions (type the letter).</p>
+
+        <div class="two-col">
+          <div class="q">
+            <div class="row">
+              <span class="pill"><b>A</b> hill</span>
+              <span class="pill"><b>B</b> valley</span>
+              <span class="pill"><b>C</b> forest</span>
+              <span class="pill"><b>D</b> lake</span>
+              <span class="pill"><b>E</b> beach</span>
+              <span class="pill"><b>F</b> village</span>
+              <span class="pill"><b>G</b> river</span>
+            </div>
+            <p class="mini">Write A–G in the boxes.</p>
+            <div class="smallgrid">
+              <div>
+                1) a small town in the countryside
+                <br><input class="inline-input" id="v1" placeholder="A–G">
+              </div>
+              <div>
+                2) a big area with lots of trees
+                <br><input class="inline-input" id="v2" placeholder="A–G">
+              </div>
+              <div>
+                3) water that flows (moves) to the sea
+                <br><input class="inline-input" id="v3" placeholder="A–G">
+              </div>
+              <div>
+                4) sand next to the sea
+                <br><input class="inline-input" id="v4" placeholder="A–G">
+              </div>
+              <div>
+                5) land that goes up, but not as high as a mountain
+                <br><input class="inline-input" id="v5" placeholder="A–G">
+              </div>
+              <div>
+                6) water surrounded by land
+                <br><input class="inline-input" id="v6" placeholder="A–G">
+              </div>
+              <div>
+                7) low land between hills or mountains
+                <br><input class="inline-input" id="v7" placeholder="A–G">
+              </div>
+            </div>
+
+            <div class="btnrow">
+              
+              
+            </div>
+            <div id="vocabResult" class="result"></div>
+          </div>
+
+          <div class="q">
+            <strong>Mini challenge:</strong>
+            <p class="mini">Write 3 sentences about a place near you. Use <i>there is / there are</i>.</p>
+            <textarea id="vocabWriting" placeholder="Example: There is a river near our town..."></textarea>
+            <div class="btnrow">
+              
+              
+              
+            </div>
+            <p class="mini muted">Saving uses your browser’s local storage (only on this device).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title"><span class="icon">3</span>Describing a picture</h2>
+        <p class="hint">Use these helpful phrases, then write a short description.</p>
+
+        <div class="kb" aria-label="Phrase bank">
+          <span>On the left</span>
+          <span>On the right</span>
+          <span>In the middle</span>
+          <span>At the top</span>
+          <span>At the bottom</span>
+          <span>Next to…</span>
+          <span>In front of…</span>
+          <span>Behind…</span>
+          <span>There is…</span>
+          <span>There are…</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="q">
+          <strong>Task:</strong> Imagine a picture with a <b>river</b>, a <b>bridge</b>, a <b>village</b>, and a <b>forest</b>.
+          Write <b>6–8 sentences</b> describing where things are.
+          <textarea id="picDesc" placeholder="Start: In the middle there is a river..."></textarea>
+          <div class="btnrow">
+            
+            
+            
+            
+          </div>
+          <div id="picCount" class="mini"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title"><span class="icon">4</span>Making and suggesting plans</h2>
+        <p class="hint">Complete the dialogue. Then check your answers.</p>
+
+        <div class="q">
+          <p><b>A:</b> Let’s <input id="p1" class="inline-input" placeholder="go / visit / build ..."> on Monday.</p>
+          <p><b>B:</b> Canoeing? I’m not sure.</p>
+          <p><b>A:</b> Well, you don’t have to come along. I’ll go alone, then.</p>
+          <p><b>B:</b> Wait a minute. I think I’ll join you.</p>
+          <p><b>A:</b> Great. But bring <input id="p2" class="inline-input" placeholder="what?">! And you have to <input id="p3" class="inline-input" placeholder="what?"> a life jacket in the boat all the time.</p>
+          <p><b>B:</b> Of course. I know that.</p>
+
+          <div class="btnrow">
+            
+            
+          </div>
+          <div id="plansResult" class="result"></div>
+
+          <div class="divider"></div>
+
+          <p class="mini"><b>Useful phrases:</b> Let’s… · Shall we…? · Why don’t we…? · Good idea! · I’m not sure.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title"><span class="icon">5</span>Writing: Email home (Unit 6 style)</h2>
+        <p class="hint">Write 80–120 words. Use past simple + have to / don’t have to.</p>
+
+        <div class="smallgrid">
+          <div class="q">
+            <strong>Include:</strong>
+            <p class="mini">1) what the camp is like<br>2) what you did yesterday<br>3) rules (have to / don’t have to)<br>4) what you want to do tomorrow</p>
+          </div>
+          <div class="q">
+            <strong>Sentence starters (optional):</strong>
+            <p class="mini">Hi Mum/Dad,<br>
+              The camp is…<br>
+              Yesterday we…<br>
+              We have to… but we don’t have to…<br>
+              Tomorrow I’m going to…<br>
+              Love,<br>
+            </p>
+          </div>
+        </div>
+
+        <div class="q">
+          <textarea id="emailText" placeholder="Hi Mum,&#10;&#10;The camp is..."></textarea>
+          <div class="btnrow">
+            
+            
+            
+            
+            
+          </div>
+          <div id="emailCount" class="mini"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">Tip: Do a little every day. Small steps = big progress.</div>
+  </div>
+
+  
+
+</div>
+</body>
+</html>
