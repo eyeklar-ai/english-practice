@@ -1,0 +1,91 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Past Simple Intensive – Unit 8</title>
+<style>
+body {font-family: Arial; max-width: 900px; margin: 30px auto; line-height: 1.6;}
+.card {border:1px solid #ccc; border-radius:12px; padding:15px; margin:15px 0;}
+button {padding:8px 12px; margin:5px; border-radius:8px; border:1px solid #aaa;}
+input[type=text] {padding:6px; border-radius:6px; border:1px solid #aaa;}
+.feedback {margin-top:10px; padding:10px; background:#f2f2f2; border-radius:8px;}
+@media print {.noPrint{display:none;}}
+</style>
+
+<script>
+const solutions = {
+a1:"went", a2:"saw", a3:"had", a4:"took", a5:"came",
+b1:"did", b2:"didn't", b3:"was", b4:"were",
+c1:"visited", c2:"played", c3:"watched", c4:"ate"
+};
+
+function norm(s){return s.toLowerCase().trim();}
+
+function checkAnswers(){
+let score = 0;
+let total = Object.keys(solutions).length;
+
+for(let key in solutions){
+let el = document.getElementById(key);
+if(el && norm(el.value) === solutions[key]){score++;}
+}
+
+document.getElementById("result").innerHTML =
+"<b>Score:</b> " + score + " / " + total;
+}
+
+function printPDF(){window.print();}
+function resetAll(){document.getElementById("form").reset();}
+</script>
+</head>
+
+<body>
+
+<div style="margin-bottom:20px;">
+    <a href="index.html" style="text-decoration:none; padding:8px 12px; border-radius:8px; background:#4e73df; color:white; font-weight:600;">🏠 Back to Home</a>
+</div>
+
+
+<h1>Past Simple Intensive – Unit 8</h1>
+
+<div class="card">
+<b>Exercise A – Irregular verbs</b><br><br>
+1. Yesterday he <input id="a1" type="text"> (go) to school.<br><br>
+2. He <input id="a2" type="text"> (see) an alien.<br><br>
+3. They <input id="a3" type="text"> (have) a problem.<br><br>
+4. She <input id="a4" type="text"> (take) a photo.<br><br>
+5. The spaceship <input id="a5" type="text"> (come) back to Earth.<br>
+</div>
+
+<div class="card">
+<b>Exercise B – did / didn’t / was / were</b><br><br>
+1. <input id="b1" type="text"> he repair the spaceship?<br><br>
+2. He <input id="b2" type="text"> believe the story.<br><br>
+3. It <input id="b3" type="text"> very dangerous.<br><br>
+4. The aliens <input id="b4" type="text"> friendly.<br>
+</div>
+
+<div class="card">
+<b>Exercise C – Regular verbs (-ed)</b><br><br>
+Last weekend we <input id="c1" type="text"> (visit) our grandparents.<br><br>
+We <input id="c2" type="text"> (play) football.<br><br>
+We <input id="c3" type="text"> (watch) a film.<br><br>
+And we <input id="c4" type="text"> (eat) pizza.<br>
+</div>
+
+<div class="card">
+<b>Mini Writing</b><br><br>
+Write 5–6 sentences about yesterday. Use Past Simple.<br><br>
+<textarea style="width:100%; height:120px;"></textarea>
+</div>
+
+<div class="noPrint">
+<button onclick="checkAnswers()">Check answers</button>
+<button onclick="printPDF()">Save as PDF</button>
+<button onclick="resetAll()">Reset</button>
+<div id="result" class="feedback"></div>
+</div>
+
+</body>
+</html>
