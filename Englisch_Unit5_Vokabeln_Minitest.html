@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Englisch – Unit 5: Vocabulary + Mini-Test</title>
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --ink:#111827;
+      --muted:#6b7280;
+      --accent:#e11d48; /* passend zum MORE-Rot */
+      --line:#e5e7eb;
+      --good:#16a34a;
+      --warn:#f59e0b;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      color:var(--ink);
+      background:linear-gradient(180deg, #fff 0%, var(--bg) 60%);
+    }
+    header{
+      background:var(--accent);
+      color:#fff;
+      padding:22px 18px;
+    }
+    header h1{
+      margin:0;
+      font-size:22px;
+      letter-spacing:.2px;
+    }
+    header p{
+      margin:6px 0 0;
+      opacity:.95;
+      font-size:14px;
+    }
+    .wrap{
+      max-width:980px;
+      margin:0 auto;
+      padding:16px;
+    }
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      margin:14px 0 18px;
+    }
+    .btn{
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--ink);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:600;
+      font-size:14px;
+      box-shadow:0 1px 2px rgba(0,0,0,.04);
+    }
+    .btn.primary{
+      background:var(--ink);
+      color:#fff;
+      border-color:var(--ink);
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .note{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.35;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    @media (min-width: 860px){
+      .grid{grid-template-columns: 1.15fr .85fr;}
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px 14px 12px;
+      box-shadow:0 6px 18px rgba(17,24,39,.06);
+    }
+    .card h2{
+      margin:4px 0 10px;
+      font-size:16px;
+    }
+    .pill{
+      display:inline-block;
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid var(--line);
+      color:var(--muted);
+      margin-bottom:8px;
+    }
+    details{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px 12px;
+      margin:10px 0;
+      background:#fff;
+    }
+    details summary{
+      cursor:pointer;
+      font-weight:800;
+      color:#111827;
+      list-style:none;
+    }
+    details summary::-webkit-details-marker{display:none}
+    .vocab{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:10px;
+    }
+    .vocab th,.vocab td{
+      border-top:1px solid var(--line);
+      padding:10px 8px;
+      text-align:left;
+      vertical-align:top;
+      font-size:14px;
+    }
+    .vocab th{
+      color:var(--muted);
+      font-size:12px;
+      letter-spacing:.2px;
+      text-transform:uppercase;
+      background:linear-gradient(180deg, #fff 0%, #fafafa 100%);
+    }
+    .tag{
+      font-size:11px;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      color:var(--muted);
+      margin-left:6px;
+      white-space:nowrap;
+    }
+
+    /* Test */
+    .test h3{margin:0 0 8px;font-size:15px}
+    .test .hint{margin:0 0 10px;color:var(--muted);font-size:13px}
+    .q{
+      border-top:1px dashed var(--line);
+      padding:10px 0;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:6px;
+    }
+    .q:first-child{border-top:none;padding-top:0}
+    .q .label{
+      font-weight:700;
+    }
+    .q input{
+      width:100%;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      font-size:14px;
+      outline:none;
+    }
+    .q input:focus{border-color:#cbd5e1; box-shadow:0 0 0 3px rgba(226,232,240,.6)}
+    .meta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      color:var(--muted);
+      font-size:12px;
+      margin-top:10px;
+    }
+    .ok{color:var(--good);font-weight:700}
+    .warn{color:var(--warn);font-weight:700}
+
+    footer{
+      color:var(--muted);
+      font-size:12px;
+      padding:18px 0 30px;
+    }
+
+    @media print{
+      header, .toolbar, .note small{display:none !important}
+      body{background:#fff}
+      .wrap{max-width:none}
+      .card{box-shadow:none}
+      details{break-inside:avoid}
+      .q{break-inside:avoid}
+      a{color:inherit;text-decoration:none}
+    }
+  </style>
+</head>
+<body>
+
+<div style="margin-bottom:20px;">
+    <a href="index.html" style="text-decoration:none; padding:8px 12px; border-radius:8px; background:#4e73df; color:white; font-weight:600;">🏠 Back to Home</a>
+</div>
+
+  <header>
+    <h1>Englisch – Unit 5: Where’s the supermarket?</h1>
+    <p>Vocabulary-Liste + Mini-Test (ausfüllbar) – ideal zum Online-Üben</p>
+  </header>
+
+  <div class="wrap">
+    <div class="toolbar">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <button class="btn primary" onclick="window.print()">Als PDF speichern / Drucken</button>
+        <button class="btn" onclick="clearAll()">Alles leeren</button>
+      </div>
+      <div class="note">
+        <div><span class="ok">Auto-Speichern aktiv</span> (bleibt im Browser gespeichert).</div>
+        <small>Tipps: Ausfüllen → „Als PDF speichern“ → Datei per WhatsApp/Mail schicken.</small>
+      </div>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <div class="pill">1) Vokabeln</div>
+        <h2>Unit 5 – Wortschatz (wie im MORE-Stil)</h2>
+
+        <details open>
+          <summary>Buildings (Gebäude & Orte) <span class="tag">12 words</span></summary>
+          <table class="vocab">
+            <thead><tr><th>English</th><th>Deutsch</th><th>Beispiel</th></tr></thead>
+            <tbody>
+              <tr><td>bank</td><td>Bank</td><td>The bank is next to the post office.</td></tr>
+              <tr><td>church</td><td>Kirche</td><td>The restaurant is opposite the church.</td></tr>
+              <tr><td>police station</td><td>Polizeistation</td><td>Go past the police station.</td></tr>
+              <tr><td>supermarket</td><td>Supermarkt</td><td>Where’s the supermarket?</td></tr>
+              <tr><td>chemist’s</td><td>Apotheke</td><td>The chemist’s is on Manor Road.</td></tr>
+              <tr><td>cinema</td><td>Kino</td><td>I’m in front of the cinema.</td></tr>
+              <tr><td>post office</td><td>Postamt</td><td>The post office is next to the bank.</td></tr>
+              <tr><td>restaurant</td><td>Restaurant</td><td>The restaurant is opposite the church.</td></tr>
+              <tr><td>tourist office</td><td>Touristeninformation</td><td>Ask at the tourist office.</td></tr>
+              <tr><td>music shop</td><td>Musikgeschäft</td><td>The cinema is behind the music shop.</td></tr>
+              <tr><td>railway station</td><td>Bahnhof</td><td>How do I get to the railway station?</td></tr>
+              <tr><td>hospital</td><td>Krankenhaus</td><td>The hospital is on Columbus Avenue.</td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <details>
+          <summary>Directions (Wegbeschreibung – Grundphrasen) <span class="tag">5 phrases</span></summary>
+          <table class="vocab">
+            <thead><tr><th>English</th><th>Deutsch</th><th>Beispiel</th></tr></thead>
+            <tbody>
+              <tr><td>go straight ahead</td><td>geh geradeaus</td><td>Go straight ahead and take the first left.</td></tr>
+              <tr><td>turn right</td><td>bieg rechts ab / geh nach rechts</td><td>Turn right at the traffic lights.</td></tr>
+              <tr><td>cross the street</td><td>überquere die Straße</td><td>Cross the street and go past the park.</td></tr>
+              <tr><td>go past the little park</td><td>geh am kleinen Park vorbei</td><td>Go past the little park, then turn left.</td></tr>
+              <tr><td>take the second left</td><td>nimm die zweite links</td><td>Take the second left after the bus stop.</td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <details>
+          <summary>Prepositions of place (Präpositionen – Ort) <span class="tag">Unit 5 Grammar</span></summary>
+          <table class="vocab">
+            <thead><tr><th>English</th><th>Deutsch</th><th>Beispiel</th></tr></thead>
+            <tbody>
+              <tr><td>in front of</td><td>vor</td><td>I’m in front of the cinema.</td></tr>
+              <tr><td>behind</td><td>hinter</td><td>The cinema is behind the music shop.</td></tr>
+              <tr><td>next to</td><td>neben</td><td>The post office is next to the bank.</td></tr>
+              <tr><td>opposite</td><td>gegenüber</td><td>The restaurant is opposite the church.</td></tr>
+              <tr><td>on the corner (of …)</td><td>an der Ecke (von …)</td><td>There’s a bank on the corner of the next street.</td></tr>
+              <tr><td>round the corner</td><td>um die Ecke</td><td>It’s just round the corner.</td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <details>
+          <summary>Around town (Rund um die Stadt) <span class="tag">The Twins 2</span></summary>
+          <table class="vocab">
+            <thead><tr><th>English</th><th>Deutsch</th><th>Beispiel</th></tr></thead>
+            <tbody>
+              <tr><td>bridge</td><td>Brücke</td><td>Cross the bridge.</td></tr>
+              <tr><td>traffic lights</td><td>Ampel</td><td>Turn left at the traffic lights.</td></tr>
+              <tr><td>bus stop</td><td>Bushaltestelle</td><td>Go past the bus stop.</td></tr>
+              <tr><td>fountain</td><td>Brunnen</td><td>The fountain is in the park.</td></tr>
+              <tr><td>clock tower</td><td>Uhrturm</td><td>Meet me at the clock tower.</td></tr>
+              <tr><td>statue</td><td>Statue / Denkmal</td><td>The statue is near the bank.</td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <details>
+          <summary>Useful phrases (Höflich fragen & prüfen) <span class="tag">Speaking</span></summary>
+          <table class="vocab">
+            <thead><tr><th>English</th><th>Deutsch</th><th>Wann?</th></tr></thead>
+            <tbody>
+              <tr><td>Excuse me.</td><td>Entschuldigung.</td><td>Zum Ansprechen.</td></tr>
+              <tr><td>I’m sorry to bother you, but …</td><td>Entschuldigung, dass ich störe, aber …</td><td>Höflich unterbrechen.</td></tr>
+              <tr><td>Can you tell me where … is?</td><td>Können Sie mir sagen, wo … ist?</td><td>Nach dem Ort fragen.</td></tr>
+              <tr><td>How do I get there?</td><td>Wie komme ich dorthin?</td><td>Nach dem Weg fragen.</td></tr>
+              <tr><td>So that’s …, right?</td><td>Also …, stimmt das?</td><td>Verständnis checken.</td></tr>
+            </tbody>
+          </table>
+        </details>
+      </section>
+
+      <aside class="card test">
+        <div class="pill">2) Mini-Test</div>
+        <h2>Mini-Test (ausfüllen)</h2>
+        <p class="hint">Teil A: Deutsch → Englisch. Teil B: Englisch → Deutsch. Am Schluss als PDF speichern.</p>
+
+        <h3>Teil A – Deutsch → Englisch</h3>
+        <div class="q">
+          <div class="label">1) Supermarkt</div>
+          <input data-key="a1" placeholder="English word…" />
+        </div>
+        <div class="q">
+          <div class="label">2) Polizeistation</div>
+          <input data-key="a2" placeholder="English word…" />
+        </div>
+        <div class="q">
+          <div class="label">3) Postamt</div>
+          <input data-key="a3" placeholder="English word…" />
+        </div>
+        <div class="q">
+          <div class="label">4) Bushaltestelle</div>
+          <input data-key="a4" placeholder="English word…" />
+        </div>
+        <div class="q">
+          <div class="label">5) Geh geradeaus.</div>
+          <input data-key="a5" placeholder="English phrase…" />
+        </div>
+        <div class="q">
+          <div class="label">6) Überquere die Straße.</div>
+          <input data-key="a6" placeholder="English phrase…" />
+        </div>
+
+        <div style="height:8px"></div>
+
+        <h3>Teil B – Englisch → Deutsch</h3>
+        <div class="q">
+          <div class="label">1) church</div>
+          <input data-key="b1" placeholder="Deutsch…" />
+        </div>
+        <div class="q">
+          <div class="label">2) tourist office</div>
+          <input data-key="b2" placeholder="Deutsch…" />
+        </div>
+        <div class="q">
+          <div class="label">3) take the second left</div>
+          <input data-key="b3" placeholder="Deutsch…" />
+        </div>
+        <div class="q">
+          <div class="label">4) opposite</div>
+          <input data-key="b4" placeholder="Deutsch…" />
+        </div>
+        <div class="q">
+          <div class="label">5) traffic lights</div>
+          <input data-key="b5" placeholder="Deutsch…" />
+        </div>
+        <div class="q">
+          <div class="label">6) in front of</div>
+          <input data-key="b6" placeholder="Deutsch…" />
+        </div>
+
+        <div class="meta">
+          <span class="ok">Hinweis:</span>
+          <span>Es gibt mehrere richtige Übersetzungen (z. B. „bieg rechts ab“/„geh nach rechts“).</span>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      <div><strong>Für Thomas:</strong> Wenn du willst, baue ich als nächsten Schritt einen „großen Test“ (20–30 Fragen) oder ein Memory/Flashcard-Format – gleiches Workflow-Prinzip (ausfüllen → PDF speichern → schicken).</div>
+    </footer>
+  </div>
+
+  <script>
+    // Autosave to localStorage
+    const inputs = document.querySelectorAll('input[data-key]');
+    const KEY = 'unit5_vocab_minitest_v1';
+
+    function load(){
+      try{
+        const data = JSON.parse(localStorage.getItem(KEY) || '{}');
+        inputs.forEach(inp => {
+          const k = inp.dataset.key;
+          if (data[k] !== undefined) inp.value = data[k];
+        });
+      }catch(e){}
+    }
+    function save(){
+      const data = {};
+      inputs.forEach(inp => data[inp.dataset.key] = inp.value);
+      localStorage.setItem(KEY, JSON.stringify(data));
+    }
+    function clearAll(){
+      if(!confirm('Wirklich alles leeren?')) return;
+      inputs.forEach(i => i.value = '');
+      localStorage.removeItem(KEY);
+    }
+    window.clearAll = clearAll;
+
+    inputs.forEach(inp => inp.addEventListener('input', save));
+    load();
+  </script>
+</body>
+</html>
