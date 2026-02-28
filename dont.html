@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Have to / Don’t have to – Present Simple</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: 30px auto; padding: 20px; }
+    h1 { font-size: 22px; }
+    .item { margin-bottom: 12px; }
+    input { padding: 5px; width: 220px; }
+    .correct { color: green; font-weight: bold; }
+    .wrong { color: red; font-weight: bold; }
+    button { margin-top: 20px; padding: 8px 14px; font-size: 14px; }
+  </style>
+</head>
+<body>
+
+<h1>Have to / Don’t have to – Present Simple</h1>
+<p>Fill in: <strong>have to, has to, don’t have to, doesn’t have to</strong></p>
+
+<div id="exercise"></div>
+
+<button onclick="check()">Fertig</button>
+<button onclick="location.reload()">Zurücksetzen</button>
+
+<p id="result"></p>
+
+<script>
+const sentences = [
+["I", "get up early on Sundays.", "don't have to"],
+["She", "wear a school uniform.", "doesn't have to"],
+["We", "do homework today.", "don't have to"],
+["Tom", "help his brother.", "has to"],
+["You", "bring food to the party.", "don't have to"],
+["My dad", "work on Saturdays.", "has to"],
+["They", "take the bus to school.", "have to"],
+["Emma", "clean her room.", "has to"],
+["I", "study for the test.", "don't have to"],
+["Jack", "go to the dentist.", "has to"],
+["We", "wear helmets.", "have to"],
+["Sarah", "cook dinner tonight.", "doesn't have to"],
+["You", "be quiet in the library.", "have to"],
+["My parents", "pay for my books.", "have to"],
+["He", "finish the project.", "has to"],
+["I", "make my bed every morning.", "have to"],
+["The students", "bring laptops.", "have to"],
+["Lisa", "feed the dog.", "has to"],
+["We", "hurry.", "don't have to"],
+["Paul", "take an umbrella.", "has to"],
+["You", "do the exercise.", "don't have to"],
+["My teacher", "correct all tests.", "has to"],
+["They", "wear formal clothes.", "have to"],
+["Anna", "share her room.", "has to"],
+["I", "call my grandmother.", "have to"]
+];
+
+const container = document.getElementById("exercise");
+
+sentences.forEach((s, i) => {
+  container.innerHTML += `
+    <div class="item">
+      ${i+1}. ${s[0]} 
+      <input type="text" id="q${i}">
+      ${s[1]}
+      <span id="r${i}"></span>
+    </div>
+  `;
+});
+
+function normalize(text){
+  return text.toLowerCase().replace(/’/g,"'").trim();
+}
+
+function check(){
+  let score = 0;
+  sentences.forEach((s,i)=>{
+    const input = document.getElementById("q"+i).value;
+    const result = document.getElementById("r"+i);
+    if(normalize(input) === normalize(s[2])){
+      result.innerHTML = " ✓";
+      result.className = "correct";
+      score++;
+    } else {
+      result.innerHTML = " ✗ (Richtig: " + s[2] + ")";
+      result.className = "wrong";
+    }
+  });
+  document.getElementById("result").innerHTML = "<strong>Punkte: " + score + " / " + sentences.length + "</strong>";
+}
+</script>
+
+</body>
+</html>
