@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>More! 2 – Vokabeltrainer</title>
+  <style>
+    body{font-family:Arial,sans-serif;max-width:980px;margin:24px auto;padding:0 16px}
+    h1{font-size:22px;margin:0 0 10px}
+    .panel{border:1px solid #ddd;border-radius:12px;padding:12px;margin-bottom:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .units{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    label.unit{display:flex;gap:6px;align-items:center;background:#f3f3f3;padding:6px 10px;border-radius:999px}
+    button{padding:8px 12px;border:0;border-radius:10px;cursor:pointer;background:#eee}
+    #newBtn{background:#111;color:#fff}
+    #checkBtn{background:#0b5;color:#fff}
+    .card{border:1px solid #ddd;border-radius:14px;padding:12px}
+    .item{padding:10px 0;border-bottom:1px solid #eee;display:grid;grid-template-columns:44px 1fr;gap:10px}
+    .item:last-child{border-bottom:0}
+    .num{color:#666;font-weight:bold}
+    .q{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
+    input.answer{padding:6px 10px;width:260px;border-radius:10px;border:1px solid #bbb}
+    .mark{font-weight:bold;margin-left:6px}
+    .ok{color:#0a7a2f}
+    .bad{color:#8e24aa}
+    .sum{margin-top:14px;border-top:1px dashed #ddd;padding-top:12px}
+    .sum h2{font-size:16px;margin:0 0 8px}
+    .review-title{margin:12px 0 6px 0;font-weight:bold}
+    .wrong{margin:6px 0;padding:10px 12px;border-radius:10px;background:#8e24aa;color:#ffffff;font-weight:500}
+    .wrong strong{color:#ffffff}
+    @media(max-width:520px){input.answer{width:100%}}
+  </style>
+</head>
+<body>
+  <h1>More! 2 – Vokabeltrainer</h1>
+
+  <div class="panel">
+    <div class="units" id="units"></div>
+    <button id="newBtn">Neuer Test</button>
+    <button id="checkBtn">Fertig</button>
+  </div>
+
+  <div class="card" id="test"></div>
+
+<script>
+  const VOCAB = {"1": [{"en": "glad", "de": "froh"}, {"en": "kilometre", "de": "Kilometer"}, {"en": "to stay at home", "de": "zu Hause bleiben"}, {"en": "to travel", "de": "reisen"}, {"en": "as soon as", "de": "sobald (wie)"}, {"en": "to get dressed", "de": "sich anziehen"}, {"en": "to go for a walk", "de": "spazieren gehen"}, {"en": "lesson", "de": "Unterrichtsstunde"}, {"en": "to prepare", "de": "(vor-/zu-)bereiten"}, {"en": "to put on", "de": "anziehen (Kleidung)"}, {"en": "supper", "de": "Abendessen"}, {"en": "daily", "de": "täglich"}, {"en": "calendar", "de": "Kalender"}, {"en": "grandmother", "de": "Großmutter"}, {"en": "joke", "de": "Witz"}, {"en": "scary", "de": "furchterregend; unheimlich"}, {"en": "spring", "de": "Frühling"}, {"en": "area", "de": "Gebiet; Region"}, {"en": "to book", "de": "buchen"}, {"en": "popular", "de": "beliebt"}, {"en": "shadow", "de": "Schatten"}, {"en": "to visit", "de": "besuchen; besichtigen"}, {"en": "colourful", "de": "bunt; farbenfroh"}, {"en": "along", "de": "entlang"}, {"en": "to crawl", "de": "kriechen"}, {"en": "to take a rest", "de": "sich ausruhen"}, {"en": "(school) subject", "de": "(Schul-)Fach"}, {"en": "break", "de": "Pause"}, {"en": "timetable", "de": "Stundenplan"}, {"en": "bicycle lane", "de": "Radweg"}, {"en": "king", "de": "König"}, {"en": "noisy", "de": "laut; geräuschvoll"}, {"en": "queen", "de": "Königin"}, {"en": "rubbish", "de": "Müll; Abfall"}], "2": [{"en": "online safety", "de": "Internetsicherheit"}, {"en": "opinion", "de": "Meinung"}, {"en": "webpage", "de": "Internetseite"}, {"en": "to organise", "de": "organisieren"}, {"en": "surprise party", "de": "Überraschungsparty"}, {"en": "admission fee", "de": "Eintritt; Eintrittspreis"}, {"en": "artist", "de": "Künstler/Künstlerin"}, {"en": "exhibition", "de": "Ausstellung"}, {"en": "dirty", "de": "dreckig; schmutzig"}, {"en": "modern", "de": "modern"}, {"en": "museum", "de": "Museum"}, {"en": "to be part of", "de": "Teil von etw. sein"}, {"en": "sculpture", "de": "Skulptur"}, {"en": "to be worth", "de": "wert sein"}, {"en": "What's the matter?", "de": "Was ist los?"}, {"en": "anyone", "de": "irgendjemand"}, {"en": "behaviour", "de": "Verhalten"}, {"en": "to contact", "de": "kontaktieren"}, {"en": "mess", "de": "Unordnung; Durcheinander"}, {"en": "to pass on", "de": "weitergeben"}, {"en": "password", "de": "Passwort"}, {"en": "to post", "de": "posten; einen Beitrag verfassen (online)"}, {"en": "posting", "de": "Posting; Beitrag (online)"}, {"en": "such", "de": "solch; so (ein)"}, {"en": "tip", "de": "Hinweis; Tipp"}, {"en": "possible", "de": "möglich"}, {"en": "awesome", "de": "großartig; beeindruckend"}, {"en": "boring", "de": "langweilig"}, {"en": "confusing", "de": "verwirrend"}, {"en": "difficult", "de": "schwierig"}, {"en": "exciting", "de": "spannend; aufregend"}, {"en": "funny", "de": "lustig; komisch"}, {"en": "embarrassed", "de": "verlegen; beschämt"}, {"en": "plate", "de": "Teller"}, {"en": "secret", "de": "Geheimnis"}, {"en": "upset", "de": "verärgert; aufgebracht"}, {"en": "to add", "de": "hinzufügen"}, {"en": "to fail", "de": "scheitern; durchfallen"}, {"en": "I promise.", "de": "Ich verspreche es."}], "3": [{"en": "tradition", "de": "Tradition"}, {"en": "to fear", "de": "(sich) fürchten (vor)"}, {"en": "to cut off", "de": "abschneiden"}, {"en": "front window", "de": "Vorderfenster"}, {"en": "to keep", "de": "(be-)halten"}, {"en": "to be proud (of)", "de": "stolz sein (auf)"}, {"en": "stairs", "de": "Treppe"}, {"en": "sticker", "de": "Aufkleber; Sticker"}, {"en": "sweets", "de": "Süßigkeiten"}, {"en": "Trick or treat!", "de": "Süßes oder Saures (Frage beim Halloween-Umzug)"}, {"en": "knife (pl knives)", "de": "Messer"}, {"en": "century", "de": "Jahrhundert"}, {"en": "costume", "de": "Kostüm"}, {"en": "couldn't", "de": "konnte/n; nicht"}, {"en": "cute", "de": "niedlich; süß"}, {"en": "dress", "de": "Kleid"}, {"en": "graveyard", "de": "Friedhof"}, {"en": "myself", "de": "mich selbst; mir selbst"}, {"en": "shall", "de": "sollen; wollen"}, {"en": "sick", "de": "übel; krank"}, {"en": "superheroine", "de": "Superheldin"}, {"en": "wild", "de": "wild"}, {"en": "to scare", "de": "Angst machen; erschrecken"}, {"en": "cycle helmet", "de": "Fahrradhelm"}, {"en": "guys", "de": "Leute"}, {"en": "to lose", "de": "verlieren"}, {"en": "picnic", "de": "Picknick"}], "4": [{"en": "(two days) ago", "de": "vor (zwei Tagen)"}, {"en": "farmer", "de": "Bauer/Bäuerin"}, {"en": "human", "de": "Mensch"}, {"en": "incredible", "de": "unglaublich"}, {"en": "dangerous", "de": "gefährlich"}, {"en": "hairy", "de": "haarig; stark behaart"}, {"en": "heavy", "de": "schwer"}, {"en": "strong", "de": "stark"}, {"en": "climate change", "de": "Klimawandel"}, {"en": "fast", "de": "schnell"}, {"en": "female", "de": "weiblich; Weibchen (Tierwelt)"}, {"en": "male", "de": "männlich"}, {"en": "nobody", "de": "niemand"}, {"en": "scientist", "de": "Wissenschaftler/Wissenschaftlerin"}, {"en": "to die out", "de": "aussterben"}, {"en": "less", "de": "weniger"}, {"en": "to carry", "de": "tragen; hier: übertragen"}, {"en": "centimetre", "de": "Zentimeter"}, {"en": "desert", "de": "Wüste"}, {"en": "to die", "de": "sterben"}, {"en": "mammal", "de": "Säugetier"}, {"en": "ton", "de": "Tonne (1000 kg)"}, {"en": "venomous", "de": "giftig"}, {"en": "to weigh", "de": "wiegen"}, {"en": "length", "de": "Länge"}, {"en": "speed", "de": "Geschwindigkeit; Tempo"}, {"en": "intelligent", "de": "intelligent"}, {"en": "reason", "de": "Grund"}, {"en": "to share", "de": "teilen; zeigen"}, {"en": "luck", "de": "Glück"}, {"en": "powerful", "de": "mächtig; kräftig"}, {"en": "smart", "de": "schlau"}, {"en": "truck", "de": "Lastwagen"}, {"en": "forever", "de": "für immer"}, {"en": "to protect", "de": "(be-)schützen"}], "5": [{"en": "to cross", "de": "überqueren"}, {"en": "map", "de": "(Land-)Karte"}, {"en": "second", "de": "zweiter/zweite/zweites; Sekunde"}, {"en": "to go straight on", "de": "geradeaus weitergehen"}, {"en": "airport", "de": "Flughafen"}, {"en": "to change trains", "de": "umsteigen"}, {"en": "most of the time", "de": "meistens"}, {"en": "pocket", "de": "Tasche (bei Kleidungsstücken)"}, {"en": "slow", "de": "langsam"}, {"en": "somewhere", "de": "irgendwo"}, {"en": "underground", "de": "U-Bahn"}, {"en": "market square", "de": "Marktplatz"}, {"en": "simply", "de": "einfach"}, {"en": "comment", "de": "Kommentar"}, {"en": "to comment", "de": "kommentieren"}, {"en": "feedback", "de": "Feedback"}, {"en": "guest", "de": "Gast"}, {"en": "to offer", "de": "anbieten"}, {"en": "opening", "de": "Eröffnung"}, {"en": "positive", "de": "positiv"}, {"en": "review", "de": "Rezension"}, {"en": "the worst", "de": "der/die/das schlechteste"}, {"en": "to bother", "de": "stören"}, {"en": "bus stop", "de": "Bushaltestelle"}, {"en": "fountain", "de": "(spring-)Brunnen"}, {"en": "to interrupt", "de": "unterbrechen"}, {"en": "politely", "de": "höflich"}, {"en": "traffic lights", "de": "Verkehrsampel"}], "6": [{"en": "bottom", "de": "unten; untere(r/es)"}, {"en": "left-hand", "de": "linker/linke/linkes"}, {"en": "middle", "de": "Mitte"}, {"en": "right-hand", "de": "rechter/rechte/rechtes"}, {"en": "anorak", "de": "Anorak"}, {"en": "hard hat", "de": "Schutzhelm"}, {"en": "absolutely", "de": "völlig; absolut"}, {"en": "actually", "de": "eigentlich; tatsächlich"}, {"en": "adventure camp", "de": "Abenteuercamp"}, {"en": "to be afraid (of)", "de": "Angst haben (vor)"}, {"en": "although", "de": "obwohl"}, {"en": "to care", "de": "sich kümmern"}, {"en": "drive", "de": "Fahrt"}, {"en": "gate", "de": "Tor"}, {"en": "to be good at sth.", "de": "etw. gut können; gut in etw. sein"}, {"en": "once upon a time", "de": "es war einmal"}, {"en": "sheep (pl sheep)", "de": "Schaf"}, {"en": "shepherd", "de": "Schäfer/Schäferin"}, {"en": "to trust", "de": "vertrauen"}, {"en": "while", "de": "Weile"}, {"en": "to wash up", "de": "abspülen; abwaschen"}, {"en": "alive", "de": "lebendig; am Leben"}, {"en": "cry", "de": "Schrei"}, {"en": "I'm off now.", "de": "Ich bin jetzt weg."}, {"en": "Poor you!", "de": "Du Armer! / Arme!"}], "7": [{"en": "honestly", "de": "ehrlich; wirklich"}, {"en": "instead", "de": "stattdessen"}, {"en": "to take it easy", "de": "sich entspannen"}, {"en": "to be ashamed", "de": "sich schämen"}, {"en": "to come over", "de": "vorbeikommen"}, {"en": "communication", "de": "Kommunikation"}, {"en": "excuse", "de": "Ausrede"}, {"en": "group chat", "de": "Gruppenchat"}, {"en": "social media", "de": "soziale Medien"}, {"en": "to tell a lie", "de": "lügen"}, {"en": "truth", "de": "Wahrheit"}, {"en": "to be worried", "de": "besorgt sein"}, {"en": "to crash", "de": "an einen Baum bauen; gegen etw. prallen"}, {"en": "to get into trouble", "de": "in Schwierigkeiten geraten; Ärger bekommen"}, {"en": "fancy dress party", "de": "Kostümparty"}, {"en": "disappointment", "de": "Enttäuschung"}, {"en": "German", "de": "Deutsch"}, {"en": "row", "de": "(Sitz-)Reihe"}, {"en": "sold out", "de": "ausverkauft"}, {"en": "That's a pity.", "de": "Das ist schade!"}, {"en": "ticket", "de": "Eintrittskarte; Ticket"}, {"en": "What a shame!", "de": "Wie schade!"}], "8": [{"en": "boss", "de": "Chef/Chefin"}, {"en": "cable", "de": "Kabel"}, {"en": "capital", "de": "Hauptstadt"}, {"en": "to connect", "de": "anschließen; verbinden"}, {"en": "hero, heroine", "de": "Held, Heldin"}, {"en": "machine", "de": "Maschine"}, {"en": "to repair", "de": "reparieren"}, {"en": "space", "de": "Weltall"}, {"en": "statue", "de": "Statue"}, {"en": "to take over", "de": "erobern; die Führung übernehmen"}, {"en": "traveller", "de": "Reisender/Reisende"}, {"en": "visitor", "de": "Besucher/Besucherin"}, {"en": "key", "de": "Schlüssel"}, {"en": "crew", "de": "Besatzung"}, {"en": "heart", "de": "Herz"}, {"en": "aeroplane", "de": "Flugzeug"}, {"en": "expert", "de": "Experte/Expertin"}, {"en": "hoax", "de": "Streich; Täuschung"}, {"en": "investigation", "de": "Untersuchung; Ermittlung"}, {"en": "photograph", "de": "Foto"}, {"en": "to destroy", "de": "zerstören"}, {"en": "to kidnap", "de": "entführen"}, {"en": "nonsense", "de": "Unsinn"}, {"en": "comfortable", "de": "bequem"}, {"en": "Calm down!", "de": "Beruhige dich!"}, {"en": "In that case", "de": "in diesem Fall"}], "9": [{"en": "slice", "de": "Stück; Scheibe"}, {"en": "actor, actress", "de": "Schauspieler, Schauspielerin"}, {"en": "main course", "de": "Hauptgang, Hauptspeise"}, {"en": "to pour", "de": "einschenken, schütten"}, {"en": "soup", "de": "Suppe"}, {"en": "starter", "de": "Vorspeise"}, {"en": "straightaway", "de": "sofort"}, {"en": "completely", "de": "vollständig"}, {"en": "crane", "de": "Kran"}, {"en": "to drop", "de": "fallen (lassen)"}, {"en": "to entertain", "de": "unterhalten"}, {"en": "glasses (pl)", "de": "Brille"}, {"en": "platform", "de": "Plattform"}, {"en": "to serve", "de": "servieren"}, {"en": "several", "de": "einige, mehrere"}, {"en": "stew", "de": "Eintopf"}, {"en": "fridge", "de": "Kühlschrank"}, {"en": "to complain", "de": "sich beschweren"}, {"en": "consumer", "de": "Konsument/Konsumentin"}, {"en": "delivery", "de": "Lieferung"}, {"en": "to download", "de": "herunterladen"}, {"en": "refund", "de": "Rückerstattung"}, {"en": "certain", "de": "sicher; gewiss"}, {"en": "to change one's mind", "de": "seine Meinung ändern"}, {"en": "gym", "de": "Turnhalle; Fitnesscenter"}, {"en": "to miss", "de": "hier: verpassen"}], "10": [{"en": "auntie", "de": "Tantchen"}, {"en": "calm", "de": "ruhig; gelassen"}, {"en": "girlfriend", "de": "feste Freundin"}, {"en": "to be proud of", "de": "stolz sein auf"}, {"en": "sense of humour", "de": "Sinn für Humor"}, {"en": "ugly", "de": "hässlich"}, {"en": "virus", "de": "Virus"}, {"en": "to breathe", "de": "(ein-)atmen"}, {"en": "to burn", "de": "(ver-)brennen"}, {"en": "foreign language", "de": "Fremdsprache"}, {"en": "to panic", "de": "in Panik geraten"}, {"en": "tractor", "de": "Traktor"}, {"en": "tool", "de": "Werkzeug"}, {"en": "divorced", "de": "geschieden"}, {"en": "to be related to", "de": "mit jdm. verwandt sein"}, {"en": "to delete", "de": "löschen"}, {"en": "file", "de": "Ordner; Datei"}, {"en": "to print out", "de": "ausdrucken"}, {"en": "public", "de": "öffentlich; in der Öffentlichkeit"}, {"en": "ice skating", "de": "Eislaufen"}, {"en": "fault", "de": "Schuld"}, {"en": "hopefully", "de": "hoffentlich"}], "11": [{"en": "furniture", "de": "Möbel"}, {"en": "whose", "de": "wessen"}, {"en": "American", "de": "Amerikaner/in; amerikanisch"}, {"en": "cellar", "de": "Keller"}, {"en": "Central Asia", "de": "Zentralasien"}, {"en": "electricity", "de": "Elektrizität"}, {"en": "to float", "de": "treiben; schweben"}, {"en": "moveable", "de": "beweglich"}, {"en": "underneath", "de": "unterhalb"}, {"en": "to transport", "de": "transportieren"}, {"en": "hammock", "de": "Hängematte"}, {"en": "cotton", "de": "Baumwolle"}, {"en": "leather", "de": "Leder"}, {"en": "material", "de": "Material"}, {"en": "metal", "de": "Metall"}, {"en": "pattern", "de": "Muster"}, {"en": "plain", "de": "einfarbig"}, {"en": "plastic", "de": "Plastik"}, {"en": "pond", "de": "Teich"}, {"en": "seat", "de": "(Sitz-)Platz"}, {"en": "spotted", "de": "gepunktet"}, {"en": "strap", "de": "Band"}, {"en": "striped", "de": "gestreift"}], "12": [{"en": "bath", "de": "Bad"}, {"en": "medicine", "de": "Medizin"}, {"en": "memory", "de": "Gedächtnis"}, {"en": "patient", "de": "Patient/Patientin"}, {"en": "spoon", "de": "Löffel"}, {"en": "blood", "de": "Blut"}, {"en": "lamp post", "de": "Laternenmast"}, {"en": "cure", "de": "Heilmittel"}, {"en": "to cure", "de": "heilen"}, {"en": "dentist", "de": "Zahnarzt/Zahnärztin"}, {"en": "to mash", "de": "zerdrücken; zerstampfen"}, {"en": "to mix", "de": "vermischen"}, {"en": "taste", "de": "Geschmack"}, {"en": "toothpaste", "de": "Zahnpasta"}, {"en": "worm", "de": "Wurm"}, {"en": "smell", "de": "Geruch"}, {"en": "first aid", "de": "Erste Hilfe"}, {"en": "helpful", "de": "hilfsbereit"}, {"en": "horrible", "de": "schrecklich"}, {"en": "pupil", "de": "Schüler/Schülerin"}, {"en": "since", "de": "seit"}, {"en": "Believe me!", "de": "Glaub mir!"}, {"en": "to injure", "de": "verletzen"}, {"en": "It doesn't matter.", "de": "Das macht nichts., Egal."}, {"en": "writer", "de": "Schriftsteller/Schriftstellerin"}], "13": [{"en": "coast", "de": "Küste"}, {"en": "to continue", "de": "andauern; weitergehen"}, {"en": "cool", "de": "kühl"}, {"en": "degree", "de": "Grad (°)"}, {"en": "dry", "de": "trocken"}, {"en": "formula", "de": "Formel"}, {"en": "to give way", "de": "ausweichen; Platz machen"}, {"en": "scale", "de": "Skala; Maßstab"}, {"en": "sunshine", "de": "Sonnenschein"}, {"en": "temperature", "de": "Temperatur"}, {"en": "to clear up", "de": "hier: aufheitern"}, {"en": "fog", "de": "Nebel"}, {"en": "forecast", "de": "Vorhersage"}, {"en": "hope", "de": "Hoffnung"}, {"en": "outlook", "de": "Aussicht; Ausblick"}, {"en": "small talk", "de": "Small Talk; Plauderei"}, {"en": "thick", "de": "dicht; dick"}, {"en": "towards", "de": "in Richtung auf ...; zu"}, {"en": "Have a nice day!", "de": "Einen schönen Tag noch!"}, {"en": "to make sure", "de": "sich versichern; darauf achten"}, {"en": "to rise", "de": "(an-)steigen"}, {"en": "axe", "de": "Axt"}, {"en": "bright", "de": "hell"}, {"en": "flash of light", "de": "Lichtblitz"}, {"en": "to shine", "de": "scheinen"}, {"en": "average", "de": "durchschnittlich"}, {"en": "below", "de": "(unter-)halb; unten"}, {"en": "generally", "de": "im Allgemeinen"}, {"en": "inch (pl inches)", "de": "Zoll"}, {"en": "mild", "de": "mild"}, {"en": "mile", "de": "Meile (= 1,6 Kilometer)"}, {"en": "rainfall", "de": "Niederschlag"}, {"en": "to record", "de": "aufzeichnen"}, {"en": "sea level", "de": "Meeresspiegel"}, {"en": "throughout the year", "de": "das ganze Jahr (über)"}, {"en": "western", "de": "westlich"}, {"en": "wet", "de": "nass"}, {"en": "heavy rain", "de": "starker Regen"}, {"en": "tan", "de": "(Sonnen-)Bräune"}, {"en": "binoculars", "de": "Fernglas"}, {"en": "career", "de": "Karriere"}, {"en": "to earn", "de": "(Geld) verdienen"}, {"en": "to be mad about sth.", "de": "für etw. schwärmen"}], "14": [{"en": "to grow up", "de": "erwachsen werden; aufwachsen"}, {"en": "member", "de": "Mitglied"}, {"en": "professional", "de": "professionell; hauptberuflich"}, {"en": "race", "de": "Wettkampf; Rennen"}, {"en": "serious", "de": "ernst(haft); gravierend"}, {"en": "to appear", "de": "erscheinen"}, {"en": "competition", "de": "Wettbewerb"}, {"en": "challenge", "de": "Herausforderung"}, {"en": "distance", "de": "Abstand; Distanz"}, {"en": "extreme", "de": "extrem"}, {"en": "flood", "de": "Flut"}, {"en": "to manage", "de": "etw. schaffen"}, {"en": "official", "de": "offiziell"}, {"en": "rather", "de": "ziemlich; eher"}, {"en": "to snorkel", "de": "schnorcheln"}, {"en": "to take part (in)", "de": "an etw. teilnehmen"}, {"en": "without", "de": "ohne"}, {"en": "world record", "de": "Weltrekord"}, {"en": "nil", "de": "null"}, {"en": "on one's own", "de": "alleine"}, {"en": "to score", "de": "erreichen; erzielen (Tore)"}, {"en": "to tackle", "de": "attackieren (im Sport)"}, {"en": "waste of time", "de": "Zeitverschwendung"}, {"en": "equipment", "de": "Ausrüstung"}, {"en": "success", "de": "Erfolg"}], "15": [{"en": "cage", "de": "Käfig"}, {"en": "litter tray", "de": "Katzenklo"}, {"en": "vet (veterinarian)", "de": "Tierarzt/Tierärztin"}, {"en": "to have got a fear of", "de": "Angst haben vor"}, {"en": "to keep sb. company", "de": "jdm. Gesellschaft leisten"}, {"en": "Neither do I.", "de": "Ich auch nicht."}, {"en": "So do I.", "de": "Ich auch."}, {"en": "space", "de": "Platz; Raum"}, {"en": "Antarctic Ocean", "de": "Antarktischer Ozean"}, {"en": "emperor penguin", "de": "Kaiserpinguin"}, {"en": "to release", "de": "befreien; frei lassen"}, {"en": "sand", "de": "Sand"}, {"en": "pyjamas", "de": "Pyjama; Schlafanzug"}, {"en": "to tidy (up)", "de": "aufräumen"}]};
+  const REVIEW_PCT = 40;              // fix
+  const QUESTIONS = 20;               // fix
+  const LS_KEY = "more2_vocab_error_pool_master_allunits_v1";
+
+  function norm(s){ return (s||"").toLowerCase().replace(/’/g,"'").replace(/\s+/g," ").trim(); }
+
+  function loadPool(){ try{ return JSON.parse(localStorage.getItem(LS_KEY))||{}; }catch{ return {}; } }
+  function savePool(p){ localStorage.setItem(LS_KEY, JSON.stringify(p)); }
+
+  // Fehler in den Pool
+  function addError(e){ 
+    const p = loadPool();
+    const k = norm(e.en) + "||" + norm(e.de);
+    if(!p[k]) p[k] = {en:e.en, de:e.de, right:0};
+    savePool(p);
+  }
+
+  // Nach 3x richtig aus dem Pool entfernen
+  function addRight(e){
+    const p = loadPool();
+    const k = norm(e.en) + "||" + norm(e.de);
+    if(!p[k]) return;
+    p[k].right = (p[k].right||0) + 1;
+    if(p[k].right >= 3) delete p[k];
+    savePool(p);
+  }
+
+  function poolArray(){ return Object.values(loadPool()).map(x => ({en:x.en, de:x.de, unit:"review"})); }
+
+  function shuffle(a){ return a.sort(() => Math.random() - 0.5); }
+  function pickN(a,n){ return shuffle([...a]).slice(0, Math.min(n, a.length)); }
+
+  // Units UI
+  function renderUnits(){
+    const root = document.getElementById("units");
+    root.innerHTML = "<strong>Units:</strong>";
+    for(let i=1;i<=15;i++){
+      const lab = document.createElement("label");
+      lab.className = "unit";
+      lab.innerHTML = `<input type="checkbox" class="unitChk" value="${i}" checked> Unit ${i}`;
+      root.appendChild(lab);
+    }
+  }
+
+  function getUnits(){ 
+    const c = [...document.querySelectorAll(".unitChk:checked")].map(x=>x.value);
+    return c.length ? c : ["1"];
+  }
+
+  function buildBase(units){ 
+    let list = [];
+    units.forEach(u => (VOCAB[u]||[]).forEach(v => list.push({...v, unit:u})));
+    return list;
+  }
+
+  let current = [];
+
+  function buildTest(){
+    const unitsSel = getUnits();
+    const base = buildBase(unitsSel);
+    const pool = poolArray();
+
+    const reviewCount = Math.round(QUESTIONS * (REVIEW_PCT/100));
+    const chosen = [
+      ...pickN(pool, reviewCount),
+      ...pickN(base, QUESTIONS - reviewCount),
+    ];
+
+    current = shuffle(chosen).slice(0, QUESTIONS).map(e => {
+      const dir = Math.random() < 0.5 ? "DE→EN" : "EN→DE";
+      return {
+        entry: e,
+        question: dir==="DE→EN" ? e.de : e.en,
+        answer:   dir==="DE→EN" ? e.en : e.de
+      };
+    });
+
+    renderTest();
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function renderTest(){
+    const root = document.getElementById("test");
+    root.innerHTML = "";
+    current.forEach((q,i) => {
+      const row = document.createElement("div");
+      row.className = "item";
+      row.dataset.index = i;
+      row.innerHTML = `
+        <div class="num">${String(i+1).padStart(2,"0")}</div>
+        <div class="q">
+          <span>${q.question}</span>
+          <input class="answer" type="text" autocomplete="off" spellcheck="false">
+          <span class="mark"></span>
+        </div>`;
+      root.appendChild(row);
+    });
+  }
+
+  function check(){
+    const rows = [...document.querySelectorAll(".item")];
+    let ok = 0;
+    let wrong = [];
+
+    rows.forEach(r => {
+      const q = current[r.dataset.index];
+      const inp = r.querySelector("input");
+      const mark = r.querySelector(".mark");
+
+      if(norm(inp.value) === norm(q.answer)){
+        ok++;
+        inp.style.borderColor = "#0a7a2f";
+        mark.textContent = "✓";
+        mark.className = "mark ok";
+        if(q.entry.unit === "review") addRight(q.entry);
+      } else {
+        inp.style.borderColor = "#8e24aa";
+        mark.textContent = "✗";
+        mark.className = "mark bad";
+        addError(q.entry);
+        wrong.push({q:q.question, a:q.answer});
+      }
+    });
+
+    const root = document.getElementById("test");
+    // alte Zusammenfassung entfernen (falls vorhanden)
+    const old = root.querySelector(".sum");
+    if(old) old.remove();
+
+    const sum = document.createElement("div");
+    sum.className = "sum";
+    sum.innerHTML = `<h2>Ergebnis: ${ok}/${current.length}</h2>`;
+
+    if(wrong.length){
+      const t = document.createElement("div");
+      t.className = "review-title";
+      t.textContent = "Hier sind die Wörter, die du noch genauer lernen musst:";
+      sum.appendChild(t);
+
+      wrong.forEach(w => {
+        const d = document.createElement("div");
+        d.className = "wrong";
+        d.innerHTML = `<strong>${w.q}</strong> → ${w.a}`;
+        sum.appendChild(d);
+      });
+    } else {
+      const d = document.createElement("div");
+      d.textContent = "Alles richtig – super!";
+      sum.appendChild(d);
+    }
+
+    root.appendChild(sum);
+    window.scrollTo({top:document.body.scrollHeight, behavior:"smooth"});
+  }
+
+  renderUnits();
+  document.getElementById("newBtn").onclick = buildTest;
+  document.getElementById("checkBtn").onclick = check;
+
+  // Autostart
+  buildTest();
+</script>
+</body>
+</html>
