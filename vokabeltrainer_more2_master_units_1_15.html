@@ -56,7 +56,7 @@
   }
   // Split multi-meaning answers like "Unordnung; Durcheinander" into acceptable variants
   function splitAnswers(answer){
-    const raw = (answer || "").split(";")
+    const raw = (answer || "").split(/\s*[;,]\s*/)
       .map(x => x.trim())
       .filter(Boolean);
     // If there is no semicolon, keep the full answer as the only variant
@@ -165,6 +165,7 @@
   }
 
   function check(){
+    if(alreadyChecked) return; // lock results after first check
     const rows = [...document.querySelectorAll(".item")];
     let ok = 0;
     let wrong = [];
@@ -216,6 +217,11 @@
       sum.appendChild(d);
     }
 
+    // Lock inputs so results can't be "cleared" by re-checking
+    rows.forEach(r => {
+      const inp = r.querySelector('input');
+      if(inp) inp.disabled = true;
+    });
     root.appendChild(sum);
     alreadyChecked = true;
     window.scrollTo({top:document.body.scrollHeight, behavior:"smooth"});
