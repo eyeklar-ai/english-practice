@@ -3,21 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Have to / Don’t have to – Present Simple</title>
+  <title>Have to / Don't have to – Clear Practice</title>
   <style>
     body { font-family: Arial, sans-serif; max-width: 900px; margin: 30px auto; padding: 20px; }
     h1 { font-size: 22px; }
-    .item { margin-bottom: 12px; }
-    input { padding: 5px; width: 220px; }
+    .item { margin-bottom: 14px; }
+    input { padding: 5px; width: 200px; }
     .correct { color: green; font-weight: bold; }
     .wrong { color: red; font-weight: bold; }
-    button { margin-top: 20px; padding: 8px 14px; font-size: 14px; }
+    button { margin-top: 20px; padding: 8px 14px; font-size: 14px; margin-right: 10px; }
+    .hint { color: #444; font-size: 14px; margin-bottom: 20px; }
   </style>
 </head>
 <body>
 
-<h1>Have to / Don’t have to – Present Simple</h1>
-<p>Fill in: <strong>have to, has to, don’t have to, doesn’t have to</strong></p>
+<h1>Have to / Don't have to – Present Simple</h1>
+<p class="hint">
+Complete the sentences. Use the correct form.<br>
+Pay attention to he / she / it!
+</p>
 
 <div id="exercise"></div>
 
@@ -28,31 +32,31 @@
 
 <script>
 const sentences = [
-["I", "get up early on Sundays.", "don't have to"],
-["She", "wear a school uniform.", "doesn't have to"],
-["We", "do homework today.", "don't have to"],
-["Tom", "help his brother.", "has to"],
-["You", "bring food to the party.", "don't have to"],
-["My dad", "work on Saturdays.", "has to"],
-["They", "take the bus to school.", "have to"],
-["Emma", "clean her room.", "has to"],
-["I", "study for the test.", "don't have to"],
-["Jack", "go to the dentist.", "has to"],
-["We", "wear helmets.", "have to"],
-["Sarah", "cook dinner tonight.", "doesn't have to"],
-["You", "be quiet in the library.", "have to"],
-["My parents", "pay for my books.", "have to"],
-["He", "finish the project.", "has to"],
-["I", "make my bed every morning.", "have to"],
-["The students", "bring laptops.", "have to"],
-["Lisa", "feed the dog.", "has to"],
-["We", "hurry.", "don't have to"],
-["Paul", "take an umbrella.", "has to"],
-["You", "do the exercise.", "don't have to"],
-["My teacher", "correct all tests.", "has to"],
-["They", "wear formal clothes.", "have to"],
-["Anna", "share her room.", "has to"],
-["I", "call my grandmother.", "have to"]
+["I", "get up at 6:30. School starts at 7:30. (have to)", "have to"],
+["She", "wear a school uniform. It is compulsory. (have to)", "has to"],
+["We", "go to school today. It is Sunday. (don't have to)", "don't have to"],
+["Tom", "do his homework. The teacher checks it. (have to)", "has to"],
+["You", "bring food. There is lunch at school. (don't have to)", "don't have to"],
+["My dad", "work on Saturday. His job is Monday to Friday. (don't have to)", "doesn't have to"],
+["They", "take the bus. They live 10 km away. (have to)", "have to"],
+["Emma", "clean her room. Her mum says so. (have to)", "has to"],
+["I", "wear a jacket. It is 25 degrees today. (don't have to)", "don't have to"],
+["Jack", "go to football training. It is every Tuesday. (have to)", "has to"],
+["We", "wear helmets when we ride bikes. It is the rule. (have to)", "have to"],
+["Sarah", "cook dinner. Her brother cooks today. (don't have to)", "doesn't have to"],
+["You", "be quiet in the library. That is the rule. (have to)", "have to"],
+["My parents", "pay for my bus ticket. It is free for students. (don't have to)", "don't have to"],
+["He", "finish the project today. The deadline is tomorrow. (have to)", "has to"],
+["I", "bring my laptop. The teacher has computers. (don't have to)", "don't have to"],
+["The students", "do a test today. It is test day. (have to)", "have to"],
+["Lisa", "feed the dog every day. It is her job. (have to)", "has to"],
+["We", "hurry. The lesson starts in one hour. (don't have to)", "don't have to"],
+["Paul", "take an umbrella. It is raining. (have to)", "has to"],
+["You", "do the exercise. It is optional. (don't have to)", "don't have to"],
+["My teacher", "correct the tests tonight. She wants to finish. (have to)", "has to"],
+["They", "wear sports clothes in PE. It is required. (have to)", "have to"],
+["Anna", "share her room. She has her own room. (don't have to)", "doesn't have to"],
+["I", "help at home. My parents ask me. (have to)", "have to"]
 ];
 
 const container = document.getElementById("exercise");
