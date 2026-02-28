@@ -48,6 +48,12 @@
   const LS_KEY = "more2_vocab_error_pool_master_allunits_v1";
 
   function norm(s){ return (s||"").toLowerCase().replace(/’/g,"'").replace(/\s+/g," ").trim(); }
+  // Treat optional "to " in infinitives as equivalent (e.g., "go" == "to go")
+  function canon(s){
+    let t = norm(s);
+    if(t.startsWith("to ")) t = t.slice(3).trim();
+    return t;
+  }
 
   function loadPool(){ try{ return JSON.parse(localStorage.getItem(LS_KEY))||{}; }catch{ return {}; } }
   function savePool(p){ localStorage.setItem(LS_KEY, JSON.stringify(p)); }
@@ -55,7 +61,7 @@
   // Fehler in den Pool
   function addError(e){ 
     const p = loadPool();
-    const k = norm(e.en) + "||" + norm(e.de);
+    const k = canon(e.en) + "||" + canon(e.de);
     if(!p[k]) p[k] = {en:e.en, de:e.de, right:0};
     savePool(p);
   }
@@ -63,7 +69,7 @@
   // Nach 3x richtig aus dem Pool entfernen
   function addRight(e){
     const p = loadPool();
-    const k = norm(e.en) + "||" + norm(e.de);
+    const k = canon(e.en) + "||" + canon(e.de);
     if(!p[k]) return;
     p[k].right = (p[k].right||0) + 1;
     if(p[k].right >= 3) delete p[k];
@@ -99,6 +105,7 @@
   }
 
   let current = [];
+  let alreadyChecked = false;
 
   function buildTest(){
     const unitsSel = getUnits();
@@ -121,6 +128,7 @@
     });
 
     renderTest();
+    alreadyChecked = false;
     window.scrollTo({top:0, behavior:"smooth"});
   }
 
@@ -152,7 +160,7 @@
       const inp = r.querySelector("input");
       const mark = r.querySelector(".mark");
 
-      if(norm(inp.value) === norm(q.answer)){
+      if(canon(inp.value) === canon(q.answer)){
         ok++;
         inp.style.borderColor = "#0a7a2f";
         mark.textContent = "✓";
@@ -195,11 +203,51 @@
     }
 
     root.appendChild(sum);
+    alreadyChecked = true;
     window.scrollTo({top:document.body.scrollHeight, behavior:"smooth"});
   }
 
   renderUnits();
-  document.getElementById("newBtn").onclick = buildTest;
+  function anyEmptyAnswers(){
+    const inputs = [...document.querySelectorAll(".item input.answer")];
+    return inputs.some(inp => !inp.value.trim());
+  }
+
+  function markUnansweredAsErrors(){
+    const rows = [...document.querySelectorAll(".item")];
+    rows.forEach(r => {
+      const idx = Number(r.dataset.index);
+      const q = current[idx];
+      const inp = r.querySelector("input");
+      if(!inp.value.trim()){
+        // Unanswered → send into error pool so it comes back next time
+        addError(q.entry);
+      }
+    });
+  }
+
+  document.getElementById("newBtn").onclick = function(){
+    // If already checked: start a new test immediately
+    if(alreadyChecked){
+      buildTest();
+      return;
+    }
+
+    // Not checked yet
+    if(anyEmptyAnswers()){
+      const ok = confirm("Willst du wirklich aufhören? Alle nicht beantworteten Vokabeln kommen beim nächsten Mal wieder!");
+      if(!ok) return;
+      // Only unanswered go into the error pool (answered ones are NOT judged here)
+      markUnansweredAsErrors();
+      buildTest();
+      return;
+    }
+
+    // All answered but not checked → show results first (no escape)
+    check();
+    // After this, user can review and click "Neuer Test" again to start fresh.
+  };
+
   document.getElementById("checkBtn").onclick = check;
 
   // Autostart
