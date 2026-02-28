@@ -54,6 +54,20 @@
     if(t.startsWith("to ")) t = t.slice(3).trim();
     return t;
   }
+  // Split multi-meaning answers like "Unordnung; Durcheinander" into acceptable variants
+  function splitAnswers(answer){
+    const raw = (answer || "").split(";")
+      .map(x => x.trim())
+      .filter(Boolean);
+    // If there is no semicolon, keep the full answer as the only variant
+    return raw.length ? raw : [answer || ""]; 
+  }
+  function isCorrect(userInput, rightAnswer){
+    const u = canon(userInput);
+    const variants = splitAnswers(rightAnswer).map(canon);
+    // also accept if the user types the full combined string
+    return variants.includes(u) || canon(rightAnswer) === u;
+  }
 
   function loadPool(){ try{ return JSON.parse(localStorage.getItem(LS_KEY))||{}; }catch{ return {}; } }
   function savePool(p){ localStorage.setItem(LS_KEY, JSON.stringify(p)); }
@@ -160,7 +174,7 @@
       const inp = r.querySelector("input");
       const mark = r.querySelector(".mark");
 
-      if(canon(inp.value) === canon(q.answer)){
+      if(isCorrect(inp.value, q.answer)){
         ok++;
         inp.style.borderColor = "#0a7a2f";
         mark.textContent = "✓";
