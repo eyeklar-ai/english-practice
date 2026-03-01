@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Irregular Verbs Trainer</title>
+  <style>
+    body{font-family:Arial,sans-serif;max-width:1100px;margin:24px auto;padding:0 16px}
+    h1{font-size:22px;margin:0 0 10px}
+    .panel{border:1px solid #ddd;border-radius:12px;padding:12px;margin-bottom:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    button{padding:8px 12px;border:0;border-radius:10px;cursor:pointer;background:#eee}
+    #newBtn{background:#111;color:#fff}
+    #checkBtn{background:#0b5;color:#fff}
+    .card{border:1px solid #ddd;border-radius:14px;padding:12px}
+    table{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed}
+    th,td{border-bottom:1px solid #eee;padding:10px 8px;vertical-align:top;overflow:hidden}
+    th{text-align:left;color:#444;font-size:13px;font-weight:700}
+    td.num{width:44px;color:#666;font-weight:bold}
+    .given{font-weight:bold;white-space:nowrap;text-align:center}
+    input.answer{padding:6px 10px;width:100%;max-width:100%;box-sizing:border-box;border-radius:10px;border:1px solid #bbb}
+    .mark{font-weight:bold;margin-left:6px}
+    .ok{color:#0a7a2f}
+    .bad{color:#8e24aa}
+    .sum{margin-top:14px;border-top:1px dashed #ddd;padding-top:12px}
+    .sum h2{font-size:16px;margin:0 0 8px}
+    .review-title{margin:12px 0 6px 0;font-weight:bold}
+    .wrong{margin:6px 0;padding:10px 12px;border-radius:10px;background:#8e24aa;color:#ffffff;font-weight:500}
+    .wrong strong{color:#ffffff}
+    .hint{color:#555;font-size:13px}
+  </style>
+</head>
+<body>
+  <h1>Irregular Verbs Trainer</h1>
+
+  <div class="panel">
+    <button id="newBtn">Neuer Test</button>
+    <button id="checkBtn">Fertig</button>
+    <span class="hint">Pro Runde: 10 Verben. Eine Zelle ist vorgegeben, drei musst du ausfüllen.</span>
+  </div>
+
+  <div class="card" id="test"></div>
+
+<script>
+  const VERBS = [{"de": "setzen; legen; stellen", "present": "put", "past": "put", "participle": "put"}, {"de": "kosten", "present": "cost", "past": "cost", "participle": "cost"}, {"de": "(aus)schneiden", "present": "cut", "past": "cut", "participle": "cut"}, {"de": "schlagen; treffen", "present": "hit", "past": "hit", "participle": "hit"}, {"de": "schmerzen; wehtun", "present": "hurt", "past": "hurt", "participle": "hurt"}, {"de": "setzen", "present": "set", "past": "set", "participle": "set"}, {"de": "schließen", "present": "shut", "past": "shut", "participle": "shut"}, {"de": "lesen", "present": "read", "past": "read", "participle": "read"}, {"de": "bringen", "present": "bring", "past": "brought", "participle": "brought"}, {"de": "kaufen", "present": "buy", "past": "bought", "participle": "bought"}, {"de": "kämpfen", "present": "fight", "past": "fought", "participle": "fought"}, {"de": "denken", "present": "think", "past": "thought", "participle": "thought"}, {"de": "fangen", "present": "catch", "past": "caught", "participle": "caught"}, {"de": "unterrichten; lehren", "present": "teach", "past": "taught", "participle": "taught"}, {"de": "beginnen; anfangen", "present": "begin", "past": "began", "participle": "begun"}, {"de": "trinken", "present": "drink", "past": "drank", "participle": "drunk"}, {"de": "läuten", "present": "ring", "past": "rang", "participle": "rung"}, {"de": "singen", "present": "sing", "past": "sang", "participle": "sung"}, {"de": "sinken", "present": "sink", "past": "sank", "participle": "sunk"}, {"de": "schwimmen", "present": "swim", "past": "swam", "participle": "swum"}, {"de": "bauen", "present": "build", "past": "built", "participle": "built"}, {"de": "brennen", "present": "burn", "past": "burnt; burned", "participle": "burnt; burned"}, {"de": "fühlen; sich fühlen", "present": "feel", "past": "felt", "participle": "felt"}, {"de": "bekommen", "present": "get", "past": "got", "participle": "got; gotten"}, {"de": "(be)halten", "present": "keep", "past": "kept", "participle": "kept"}, {"de": "lernen", "present": "learn", "past": "learnt; learned", "participle": "learnt; learned"}, {"de": "weggehen", "present": "leave", "past": "left", "participle": "left"}, {"de": "verlieren", "present": "lose", "past": "lost", "participle": "lost"}, {"de": "bedeuten", "present": "mean", "past": "meant", "participle": "meant"}, {"de": "(sich) treffen", "present": "meet", "past": "met", "participle": "met"}, {"de": "schicken; senden", "present": "send", "past": "sent", "participle": "sent"}, {"de": "schießen", "present": "shoot", "past": "shot", "participle": "shot"}, {"de": "sitzen; sich setzen", "present": "sit", "past": "sat", "participle": "sat"}, {"de": "schlafen", "present": "sleep", "past": "slept", "participle": "slept"}, {"de": "verbringen; ausgeben", "present": "spend", "past": "spent", "participle": "spent"}, {"de": "graben", "present": "dig", "past": "dug", "participle": "dug"}, {"de": "füttern", "present": "feed", "past": "fed", "participle": "fed"}, {"de": "finden", "present": "find", "past": "found", "participle": "found"}, {"de": "haben", "present": "have", "past": "had", "participle": "had"}, {"de": "hören", "present": "hear", "past": "heard", "participle": "heard"}, {"de": "(fest)halten", "present": "hold", "past": "held", "participle": "held"}, {"de": "legen", "present": "lay", "past": "laid", "participle": "laid"}, {"de": "machen", "present": "make", "past": "made", "participle": "made"}, {"de": "bezahlen", "present": "pay", "past": "paid", "participle": "paid"}, {"de": "sagen", "present": "say", "past": "said", "participle": "said"}, {"de": "verkaufen", "present": "sell", "past": "sold", "participle": "sold"}, {"de": "stehen", "present": "stand", "past": "stood", "participle": "stood"}, {"de": "kleben", "present": "stick", "past": "stuck", "participle": "stuck"}, {"de": "erzählen; berichten", "present": "tell", "past": "told", "participle": "told"}, {"de": "verstehen", "present": "understand", "past": "understood", "participle": "understood"}, {"de": "gewinnen", "present": "win", "past": "won", "participle": "won"}, {"de": "werden", "present": "become", "past": "became", "participle": "become"}, {"de": "kommen", "present": "come", "past": "came", "participle": "come"}, {"de": "rennen; laufen", "present": "run", "past": "ran", "participle": "run"}, {"de": "sein", "present": "be (am; is; are)", "past": "was; were", "participle": "been"}, {"de": "beißen", "present": "bite", "past": "bit", "participle": "bitten"}, {"de": "wehen; blasen", "present": "blow", "past": "blew", "participle": "blown"}, {"de": "brechen", "present": "break", "past": "broke", "participle": "broken"}, {"de": "(aus)wählen", "present": "choose", "past": "chose", "participle": "chosen"}, {"de": "tun; machen", "present": "do", "past": "did", "participle": "done"}, {"de": "zeichnen", "present": "draw", "past": "drew", "participle": "drawn"}, {"de": "fahren; lenken", "present": "drive", "past": "drove", "participle": "driven"}, {"de": "essen", "present": "eat", "past": "ate", "participle": "eaten"}, {"de": "fallen", "present": "fall", "past": "fell", "participle": "fallen"}, {"de": "fliegen", "present": "fly", "past": "flew", "participle": "flown"}, {"de": "vergessen", "present": "forget", "past": "forgot", "participle": "forgotten"}, {"de": "geben", "present": "give", "past": "gave", "participle": "given"}, {"de": "gehen", "present": "go", "past": "went", "participle": "gone"}, {"de": "wachsen", "present": "grow", "past": "grew", "participle": "grown"}, {"de": "(sich) verstecken", "present": "hide", "past": "hid", "participle": "hidden"}, {"de": "kennen; wissen", "present": "know", "past": "knew", "participle": "known"}, {"de": "fahren (zB Rad); reiten", "present": "ride", "past": "rode", "participle": "ridden"}, {"de": "sehen", "present": "see", "past": "saw", "participle": "seen"}, {"de": "zittern; schütteln", "present": "shake", "past": "shook", "participle": "shaken"}, {"de": "sprechen", "present": "speak", "past": "spoke", "participle": "spoken"}, {"de": "stehlen", "present": "steal", "past": "stole", "participle": "stolen"}, {"de": "nehmen", "present": "take", "past": "took", "participle": "taken"}, {"de": "werfen", "present": "throw", "past": "threw", "participle": "thrown"}, {"de": "(auf)wachen; (auf)wecken", "present": "wake (up)", "past": "woke (up)", "participle": "woken (up)"}, {"de": "tragen; anhaben", "present": "wear", "past": "wore", "participle": "worn"}, {"de": "schreiben", "present": "write", "past": "wrote", "participle": "written"}, {"de": "lassen", "present": "let", "past": "let", "participle": "let"}];
+  const QUESTIONS = 10;
+  const REVIEW_PCT = 40;
+  const LS_KEY = "irregular_verbs_error_pool_v1";
+
+  function norm(s){
+    return (s||"")
+      .toLowerCase()
+      .replace(/’/g,"'")
+      .replace(/\s+/g," ")
+      .trim();
+  }
+
+  function canon(s){
+    let t = norm(s);
+    if(t.startsWith("to ")) t = t.slice(3).trim();
+    t = t.replace(/[\[\]]/g,"");
+    t = t.replace(/[()]/g,"");
+    return t;
+  }
+
+  function expandOptionalParens(text){
+    const s = (text||"");
+    const m = s.match(/\(([^)]+)\)/);
+    if(!m) return [s];
+    const before = s.slice(0, m.index);
+    const inside = m[1];
+    const after = s.slice(m.index + m[0].length);
+    const withInside = before + inside + after;
+    const withoutInside = before + after;
+    const a = expandOptionalParens(withInside);
+    const b = expandOptionalParens(withoutInside);
+    return [...new Set([...a, ...b])];
+  }
+
+  function splitAnswers(answer){
+    const raw = (answer || "")
+      .split(/\s*[;,\/]\s*/)
+      .map(x => x.trim())
+      .filter(Boolean);
+    return raw.length ? raw : [answer || ""];
+  }
+
+  function acceptableVariants(answer){
+    const parts = splitAnswers(answer);
+    let variants = [];
+    parts.forEach(p => {
+      expandOptionalParens(p).forEach(v => variants.push(v));
+    });
+    variants = variants.map(canon).filter(Boolean);
+    return [...new Set(variants)];
+  }
+
+  function isCorrect(userInput, rightAnswer){
+    const u = canon(userInput);
+    return acceptableVariants(rightAnswer).includes(u);
+  }
+
+  function loadPool(){ try{ return JSON.parse(localStorage.getItem(LS_KEY))||{}; }catch{ return {}; } }
+  function savePool(p){ localStorage.setItem(LS_KEY, JSON.stringify(p)); }
+
+  function keyOf(e){
+    return canon(e.present) + "||" + canon(e.past) + "||" + canon(e.participle) + "||" + canon(e.de);
+  }
+
+  function addError(e){
+    const p = loadPool();
+    const k = keyOf(e);
+    if(!p[k]) p[k] = {...e, right:0};
+    savePool(p);
+  }
+
+  function addRight(e){
+    const p = loadPool();
+    const k = keyOf(e);
+    if(!p[k]) return;
+    p[k].right = (p[k].right||0) + 1;
+    if(p[k].right >= 3) delete p[k];
+    savePool(p);
+  }
+
+  function poolArray(){ return Object.values(loadPool()).map(x => ({...x, _pool:true})); }
+
+  function shuffle(a){ return a.sort(() => Math.random() - 0.5); }
+  function pickN(a,n){ return shuffle([...a]).slice(0, Math.min(n, a.length)); }
+
+  let current = [];
+  let alreadyChecked = false;
+
+  function buildTest(){
+    const pool = poolArray();
+    const reviewCount = Math.round(QUESTIONS * (REVIEW_PCT/100));
+    const base = VERBS;
+
+    const chosen = [
+      ...pickN(pool, reviewCount),
+      ...pickN(base, QUESTIONS - reviewCount),
+    ];
+
+    current = shuffle(chosen).slice(0, QUESTIONS).map(e => {
+      
+      // balanced distribution of given columns (~25% each)
+      if(!window._givenPool || window._givenPool.length === 0){
+        window._givenPool = [];
+        const perType = Math.floor(QUESTIONS / 4);
+        for(let i=0;i<4;i++){
+          for(let j=0;j<perType;j++) window._givenPool.push(i);
+        }
+        // fill remaining slots randomly
+        while(window._givenPool.length < QUESTIONS){
+          window._givenPool.push(Math.floor(Math.random()*4));
+        }
+        window._givenPool = shuffle(window._givenPool);
+      }
+      const given = window._givenPool.pop();
+
+      return { entry:e, given };
+    });
+
+    renderTest();
+    alreadyChecked = false;
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function renderTest(){
+    const root = document.getElementById("test");
+    const table = document.createElement("table");
+    table.innerHTML = `
+      <thead>
+        <tr>
+          <th></th>
+          <th>Deutsch</th>
+          <th>Present</th>
+          <th>Past</th>
+          <th>Past participle</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    `;
+    const body = table.querySelector("tbody");
+
+    current.forEach((q,i) => {
+      const e = q.entry;
+      const tr = document.createElement("tr");
+      tr.className = "item";
+      tr.dataset.index = i;
+
+      function cell(col, value, isGiven){
+        if(isGiven) return `<td class="given" data-col="${col}">${value}</td>`;
+        return `<td data-col="${col}"><input class="answer" type="text" autocomplete="off" spellcheck="false"></td>`;
+      }
+
+      tr.innerHTML = `
+        <td class="num">${String(i+1).padStart(2,"0")}</td>
+        ${cell(0, e.de, q.given===0)}
+        ${cell(1, e.present, q.given===1)}
+        ${cell(2, e.past, q.given===2)}
+        ${cell(3, e.participle, q.given===3)}
+        <td><span class="mark"></span></td>
+      `;
+      body.appendChild(tr);
+    });
+
+    root.innerHTML = "";
+    root.appendChild(table);
+  }
+
+  function anyEmptyAnswers(){
+    const inputs = [...document.querySelectorAll(".item input.answer")];
+    return inputs.some(inp => !inp.value.trim());
+  }
+
+  function markUnansweredRowsAsErrors(){
+    const rows = [...document.querySelectorAll(".item")];
+    rows.forEach(r => {
+      const idx = Number(r.dataset.index);
+      const q = current[idx];
+      const inputs = [...r.querySelectorAll("input.answer")];
+      const anyEmpty = inputs.some(inp => !inp.value.trim());
+      if(anyEmpty) addError(q.entry);
+    });
+  }
+
+  function check(){
+    if(alreadyChecked) return;
+
+    const rows = [...document.querySelectorAll(".item")];
+    let okCount = 0;
+    let wrong = [];
+
+    rows.forEach(r => {
+      const idx = Number(r.dataset.index);
+      const q = current[idx];
+      const e = q.entry;
+      const mark = r.querySelector(".mark");
+      const answers = [e.de, e.present, e.past, e.participle];
+
+      let rowOK = true;
+      [...r.querySelectorAll("td[data-col]")].forEach(td => {
+        const col = Number(td.dataset.col);
+        const inp = td.querySelector("input.answer");
+        if(!inp) return;
+        const right = answers[col];
+        if(isCorrect(inp.value, right)){ inp.style.borderColor = "#0a7a2f"; }
+        else { inp.style.borderColor = "#8e24aa"; rowOK = false; }
+      });
+
+      if(rowOK){
+        okCount++;
+        mark.textContent = "✓";
+        mark.className = "mark ok";
+        if(q.entry._pool) addRight(q.entry);
+      } else {
+        mark.textContent = "✗";
+        mark.className = "mark bad";
+        addError(q.entry);
+        wrong.push({de:e.de, pr:e.present, pa:e.past, pp:e.participle});
+      }
+    });
+
+    const root = document.getElementById("test");
+    const old = root.querySelector(".sum");
+    if(old) old.remove();
+
+    const sum = document.createElement("div");
+    sum.className = "sum";
+    sum.innerHTML = `<h2>Ergebnis: ${okCount}/${current.length}</h2>`;
+
+    if(wrong.length){
+      const t = document.createElement("div");
+      t.className = "review-title";
+      t.textContent = "Diese Verben solltest du nochmal anschauen:";
+      sum.appendChild(t);
+
+      wrong.forEach(w => {
+        const d = document.createElement("div");
+        d.className = "wrong";
+        d.innerHTML = `<strong>${w.de}</strong><br>${w.pr} – ${w.pa} – ${w.pp}`;
+        sum.appendChild(d);
+      });
+    } else {
+      const d = document.createElement("div");
+      d.textContent = "Alles richtig – super!";
+      sum.appendChild(d);
+    }
+
+    rows.forEach(r => r.querySelectorAll("input.answer").forEach(inp => inp.disabled = true));
+    root.appendChild(sum);
+    alreadyChecked = true;
+    window.scrollTo({top:document.body.scrollHeight, behavior:"smooth"});
+  }
+
+  document.getElementById("newBtn").onclick = function(){
+    if(alreadyChecked){ buildTest(); return; }
+    if(anyEmptyAnswers()){
+      const ok = confirm("Willst du wirklich aufhören? Alle nicht beantworteten Verben kommen beim nächsten Mal wieder!");
+      if(!ok) return;
+      markUnansweredRowsAsErrors();
+      buildTest();
+      return;
+    }
+    check();
+  };
+
+  document.getElementById("checkBtn").onclick = check;
+  buildTest();
+</script>
+</body>
+</html>
